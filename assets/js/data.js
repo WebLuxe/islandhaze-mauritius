@@ -31,8 +31,15 @@
       url: SHOP + 'cocoon-freedome1018746.html', legend: 'Size', sizes: APPAREL, tone: '#f2d43a', image: null }
   ];
 
+  // Shop categories.
+  const CAT = { 'tropez-coloured': 'tops', 'azuri-stripe': 'tops', 'bahamas-gauze': 'tops', 'boxette-moment': 'tops',
+    'abelneer-denim': 'bottoms', 'jaffa-cargo': 'bottoms', 'denim-hoodie-jacket': 'outerwear', 'cocoon-freedom': 'outerwear' };
+  const CATS = [['tops', 'Tops'], ['bottoms', 'Bottoms'], ['outerwear', 'Outerwear']];
+
   // Variant ids: stable synthetic integers (product position × 100 + size position).
   items.forEach((p, pi) => {
+    p.cat = CAT[p.id];
+    p.page = 'product-' + p.id + '.html';
     p.variants = p.sizes.map((s, si) => ({ id: 910000 + (pi + 1) * 100 + si + 1, a: !p.soldOut, o: [s] }));
   });
 
@@ -70,7 +77,7 @@
   window.IH_DATA = {
     source: SHOP,
     shopHost: 'islandhaze.mu',
-    looks, items, stores,
+    looks, items, stores, cats: CATS,
     byId: id => items.find(i => i.id === id),
     money: n => 'Rs ' + Math.round(n).toLocaleString('en-US')
   };

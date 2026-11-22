@@ -55,8 +55,8 @@
         const pills = p.sizes.map((s, k) => `<label class="rw__pill"><input type="radio" name="${oname}" value="${esc(s)}" data-rw-option="0"${k === 0 ? ' checked' : ''}><span class="rw__pill-label">${esc(s)}</span></label>`).join('');
         return `<li class="rw__item" data-rw-card="${n}" style="--i:${n}" data-title="${esc(p.name)}"${p.soldOut ? ' data-soldout' : ''}>` +
           (p.isNew ? '<span class="rw__tag"><span class="rw__tag-text">New</span></span>' : '') +
-          `<a class="rw__media" href="${p.url}" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">${thumb(p, 400)}<span class="rw__num">${n}</span></a>` +
-          `<div class="rw__info"><span class="rw__type">Island Haze · ${esc(p.type)}</span><a class="rw__name" href="${p.url}" target="_blank" rel="noopener noreferrer">${esc(p.name)}</a><span class="rw__price"><span>${D.money(p.price)}</span>${p.soldOut ? '<span class="rw__so">Sold out</span>' : ''}</span></div>` +
+          `<a class="rw__media" href="${p.page}" tabindex="-1" aria-hidden="true">${thumb(p, 400)}<span class="rw__num">${n}</span></a>` +
+          `<div class="rw__info"><span class="rw__type">Island Haze · ${esc(p.type)}</span><a class="rw__name" href="${p.page}">${esc(p.name)}</a><span class="rw__price"><span>${D.money(p.price)}</span>${p.soldOut ? '<span class="rw__so">Sold out</span>' : ''}</span></div>` +
           `<button type="button" class="rw__add" data-rw-add aria-expanded="false" aria-controls="${pid}" aria-label="Add to bag: ${esc(p.name)}" data-added-label="Added to bag: ${esc(p.name)}">${ICON.plus}${ICON.check}${ICON.spin}</button>` +
           `<div class="rw__picker" data-rw-picker id="${pid}" hidden>` +
             `<div class="rw__picker-head"><span class="rw__picker-thumb">${thumb(p, 160)}</span><span><span class="rw__picker-title">${esc(p.name)}</span><span class="rw__picker-price">${D.money(p.price)}</span></span><button type="button" class="rw__pick-close" data-rw-pick-close aria-label="Close size picker">${ICON.close}</button></div>` +
@@ -146,7 +146,10 @@
       }
       this.N = N;
       this.start = reduced() ? 0 : 1.15;
-      this.index = 0; this.target = 0; this.cur = -this.start; this.vel = 0;
+      const hm = /^#look-([0-9]+)$/.exec(location.hash);
+      const i0 = hm ? clamp(parseInt(hm[1], 10) - 1, 0, n - 1) : 0;
+      this.index = 0; this.target = i0; this.cur = i0 - this.start; this.vel = 0;
+      this.holding = true; // keep the ring parked until the section is revealed
       this.bodies = $$('[data-rw-model]').map((el, a) => ({ el, a, look: a % n, w: 0, x: 0, v: 0, g: 0, gPrev: null, trip: false, from: 0, tg: 0, blur: -1, op: -1 }));
       this.still = false;
       this.visible = false;
@@ -167,6 +170,7 @@
       this.measure();
       this.bodies.forEach(s => { s.x = s.g = wrapN(s.a - this.target, N) + this.start; s.gPrev = wrapN(s.a - this.target, N); });
       this.setIndex(0, true);
+      if (i0) this.setIndex(i0);
       this.renderAll();
       this.initPickers();
       this.bind();
@@ -288,6 +292,7 @@
 
     /* ----- Loop ----- */
     kick() {
+      if (this.holding) return;
       if (!this.raf && this.visible && !document.hidden) { this.lastT = 0; this.raf = requestAnimationFrame(this._tick); }
     }
     tick(t) {
@@ -389,7 +394,7 @@
       void t.offsetWidth;
       t.classList.add('is-run');
       this.timer = setTimeout(() => {
-        if (this.playing && this.visible && !(this.drag && this.drag.active) && !document.hidden && !this.panelHover && !this.zoomed && !this.engaged) this.next();
+        if (this.playing && !this.holding && this.visible && !(this.drag && this.drag.active) && !document.hidden && !this.panelHover && !this.zoomed && !this.engaged) this.next();
         else this.restartBar();
       }, this.speed);
     }
@@ -756,17 +761,40 @@
       // Visibility for the loop
       this.io = new IntersectionObserver(es => { es.forEach(en => { this.visible = en.isIntersecting; if (this.visible) this.kick(); }); }, { threshold: 0 });
       this.io.observe(this);
-      // Intro reveal
-      if (reduced()) this.classList.add('is-revealed');
-      else {
+      // Intro reveal (waits for the site intro curtain to start lifting)
+      const release = () => { this.holding = false; this.lastT = 0; this.kick(); this.restartBar(); };
+      const beginReveal = () => {
+        const r = this.getBoundingClientRect();
+        if (reduced() || (r.top < innerHeight * .78 && r.bottom > 0)) { void this.offsetWidth; this.classList.add('is-revealed'); release(); return; }
         this.io2 = new IntersectionObserver(es => {
           if (es.some(en => en.isIntersecting)) {
             this.io2.disconnect();
-            requestAnimationFrame(() => requestAnimationFrame(() => { this.classList.add('is-revealed'); this.kick(); }));
+            void this.offsetWidth;
+            this.classList.add("is-revealed");
+            release();
           }
         }, { threshold: 0, rootMargin: '0px 0px -22% 0px' });
         this.io2.observe(this);
-      }
+      };
+      if (window.IHIntro && window.IHIntro.active) on(window, 'ih:intro-done', beginReveal, { once: true });
+      else beginReveal();
+
+      // Deep links: #look-N (from look cards, product pages, shared links)
+      const lookFromHash = h => { const m = /^#look-([0-9]+)$/.exec(h || ''); return m ? clamp(parseInt(m[1], 10) - 1, 0, this.n - 1) : -1; };
+      const jump = i => {
+        if (i < 0) return;
+        this.go(i);
+        const top = this.getBoundingClientRect().top + scrollY - (this.mobile ? 0 : this.headerH());
+        window.scrollTo({ top: Math.max(0, top), behavior: reduced() ? 'auto' : 'smooth' });
+      };
+      on(document, 'click', e => {
+        const a = e.target.closest('a[href^="#look-"]');
+        if (!a) return;
+        e.preventDefault();
+        history.replaceState(null, '', a.getAttribute('href'));
+        jump(lookFromHash(a.getAttribute('href')));
+      });
+      on(window, 'hashchange', () => jump(lookFromHash(location.hash)));
 
       this._teardown = () => {
         cancelAnimationFrame(this.raf); this.raf = 0;

@@ -4,48 +4,62 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#ffffff">
-<title>Stores — Island Haze</title>
+<title>Stores — Island Haze Mauritius</title>
 <meta name="description" content="Find an Island Haze store in Mauritius: Riche Terre, Cœur de Ville Flacq, Cascavelle and La Croisette Grand Baie.">
-<link rel="stylesheet" href="assets/css/site.css">
-<script src="assets/js/data.js" defer></script>
-<script src="assets/js/bag.js" defer></script>
-<script src="assets/js/pages.js" defer></script>
+<meta property="og:title" content="Stores — Island Haze Mauritius">
+<meta property="og:description" content="Find an Island Haze store in Mauritius: Riche Terre, Cœur de Ville Flacq, Cascavelle and La Croisette Grand Baie.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23151413'/%3E%3Ctext x='16' y='21' font-family='Arial' font-size='13' font-weight='700' fill='%23fff' text-anchor='middle'%3EIH%3C/text%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js');try{if(!sessionStorage.getItem('ih-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!document.prerendering){document.documentElement.classList.add('ih-intro-on')}sessionStorage.setItem('ih-intro','1')}catch(e){}</script>
+<link rel="preconnect" href="https://reel-ref-try-the-look.vercel.app" crossorigin>
+<link rel="preload" href="https://reel-ref-try-the-look.vercel.app/assets/inter-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css?v=mws1tuly">
+<script src="assets/js/data.js?v=mws1tuly" defer></script>
+<script src="assets/js/bag.js?v=mws1tuly" defer></script>
+<script src="assets/js/site.js?v=mws1tuly" defer></script>
+
+<script type="speculationrules">{"prerender":[{"where":{"and":[{"or":[{"href_matches":"*.html"},{"href_matches":"./"}]},{"not":{"selector_matches":"[target=_blank], [download]"}}]},"eagerness":"moderate"}],"prefetch":[{"where":{"and":[{"or":[{"href_matches":"*.html"},{"href_matches":"./"}]},{"not":{"selector_matches":"[target=_blank], [download]"}}]},"eagerness":"eager"}]}</script>
 </head>
-<body>
+<body data-page="stores">
+<div class="ih-intro" aria-hidden="true">
+  <div class="ih-intro__haze"><i></i><i></i><i></i></div>
+  <div class="ih-intro__mark"><span class="ih-intro__line"><span class="ih-intro__l" style="--i:0">I</span><span class="ih-intro__l" style="--i:1">S</span><span class="ih-intro__l" style="--i:2">L</span><span class="ih-intro__l" style="--i:3">A</span><span class="ih-intro__l" style="--i:4">N</span><span class="ih-intro__l" style="--i:5">D</span></span><span class="ih-intro__line ih-intro__line--2"><span class="ih-intro__l" style="--i:0">H</span><span class="ih-intro__l" style="--i:1">A</span><span class="ih-intro__l" style="--i:2">Z</span><span class="ih-intro__l" style="--i:3">E</span></span></div>
+  <div class="ih-intro__foot"><span>Mauritius</span><span class="ih-intro__bar"></span><span>Since 2008</span></div>
+</div>
+<a class="skip" href="#main">Skip to content</a>
 <header class="site-header shopify-section-group-header-group">
   <a href="./" class="brand" aria-label="Island Haze home">ISLAND HAZE<small>MAURITIUS</small></a>
-  <nav aria-label="Main navigation">
-    <a href="./">Try the Look</a>
-    <a href="https://islandhaze.mu/men.html" target="_blank" rel="noopener noreferrer">Men</a>
-    <a href="https://islandhaze.mu/women.html" target="_blank" rel="noopener noreferrer">Women</a>
-    <a href="stores.html" aria-current="page">Stores</a>
-    <a href="about.html">About</a>
-  </nav>
+  <nav class="site-nav" aria-label="Main navigation"><a href="./">Looks</a><a href="shop.html">Shop</a><a href="stores.html" aria-current="page">Stores<span class="nav-ind" aria-hidden="true"></span></a><a href="about.html">About</a><a href="https://islandhaze.mu/" target="_blank" rel="noopener noreferrer">islandhaze.mu <span aria-hidden="true">↗</span></a></nav>
   <button id="open-bag" type="button" aria-label="Open styling bag">
     <svg width="22" height="24" viewBox="0 0 24 26" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M4 8h16l1 16H3L4 8zM8 8V6a4 4 0 0 1 8 0v2"/></svg>
     <span data-cart-count>0</span>
   </button>
+  <button id="open-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-dialog"><span></span><span></span></button>
 </header>
-
-<main class="page">
+<main id="main" class="page">
   <p class="page-kicker">Island Haze · Mauritius</p>
-  <h1>Find a store.</h1>
+  <h1 class="reveal">Find a store.</h1>
   <p class="page-lede">Try the looks in person at an Island Haze store. Hours come from each mall’s listing, so check before you travel.</p>
-  <div class="store-grid" data-stores></div>
+  <div class="store-grid"><article class="store" style="--ci:0"><span class="store__num">01</span><h2>Riche Terre Mall</h2><p>Riche Terre, Port Louis</p><p>Mon–Thu 09:30–20:30 (mall listing)</p><p><a href="https://www.google.com/maps/search/?api=1&amp;query=Island%20Haze%20Riche%20Terre%20Mall%20Mauritius" target="_blank" rel="noopener noreferrer">Directions <span aria-hidden="true">↗</span></a></p></article><article class="store" style="--ci:1"><span class="store__num">02</span><h2>Cœur de Ville Flacq</h2><p>Centre de Flacq</p><p>Mon–Sat 09:30–19:30 · Sun 09:30–15:00</p><p><a href="tel:+2304601763">+230 460 1763</a></p><p><a href="https://www.google.com/maps/search/?api=1&amp;query=Island%20Haze%20C%C5%93ur%20de%20Ville%20Flacq%20Mauritius" target="_blank" rel="noopener noreferrer">Directions <span aria-hidden="true">↗</span></a></p></article><article class="store" style="--ci:2"><span class="store__num">03</span><h2>Cascavelle Mall</h2><p>Rivière Noire road, Uniciti</p><p>Mon–Thu 09:30–19:00 · Fri–Sat 09:30–20:00 · Sun 09:30–15:00</p><p><a href="tel:+2304529336">+230 452 9336</a></p><p><a href="https://www.google.com/maps/search/?api=1&amp;query=Island%20Haze%20Cascavelle%20Mall%20Mauritius" target="_blank" rel="noopener noreferrer">Directions <span aria-hidden="true">↗</span></a></p></article><article class="store" style="--ci:3"><span class="store__num">04</span><h2>La Croisette</h2><p>Chemin Vingt Pieds, Grand Baie</p><p>Mon–Sat 09:30–20:30 · Sun 09:30–16:00</p><p><a href="tel:+2302092000">+230 209 2000 (mall)</a></p><p><a href="https://www.google.com/maps/search/?api=1&amp;query=Island%20Haze%20La%20Croisette%20Mauritius" target="_blank" rel="noopener noreferrer">Directions <span aria-hidden="true">↗</span></a></p></article></div>
   <a class="btn" href="https://islandhaze.mu/" target="_blank" rel="noopener noreferrer">Shop online at islandhaze.mu <svg width="22" height="12" viewBox="0 0 26 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 7h24M19 1l6 6-6 6"/></svg></a>
 </main>
-
 <footer class="site-footer">
-  <span>Island Haze · Mauritius · since 2008</span>
-  <span><a href="https://www.instagram.com/island.haze/" target="_blank" rel="noopener noreferrer">Instagram</a> · <a href="https://www.facebook.com/islandhaze.mu" target="_blank" rel="noopener noreferrer">Facebook</a> · <a href="https://islandhaze.mu/" target="_blank" rel="noopener noreferrer">Shop islandhaze.mu</a></span>
+  <div class="foot-brand"><span class="brand">ISLAND HAZE</span><p>Colourful, fun streetwear for the young at heart. Mauritius, since 2008.</p></div>
+  <nav class="foot-col" aria-label="Explore"><h2>Explore</h2><a href="./">Try the Look</a><a href="shop.html">Shop all</a><a href="bag.html">Styling bag</a></nav>
+  <nav class="foot-col" aria-label="Visit"><h2>Visit</h2><a href="stores.html">Stores</a><a href="about.html">About</a><a href="https://islandhaze.mu/" target="_blank" rel="noopener noreferrer">islandhaze.mu <span aria-hidden="true">↗</span></a></nav>
+  <nav class="foot-col" aria-label="Follow"><h2>Follow</h2><a href="https://www.instagram.com/island.haze/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a><a href="https://www.facebook.com/islandhaze.mu" target="_blank" rel="noopener noreferrer">Facebook <span aria-hidden="true">↗</span></a></nav>
+  <p class="foot-note">Prices are for reference. Buy in store or on islandhaze.mu.</p>
 </footer>
-
+<dialog id="menu-dialog" class="menu" aria-label="Menu">
+  <div class="menu-top"><span class="brand">ISLAND HAZE</span><button type="button" class="menu-close" data-close-menu aria-label="Close menu">×</button></div>
+  <nav class="menu-links"><a href="./" style="--i:0"><span class="menu-num">01</span>Looks</a><a href="shop.html" style="--i:1"><span class="menu-num">02</span>Shop</a><a href="stores.html" style="--i:2" aria-current="page"><span class="menu-num">03</span>Stores</a><a href="about.html" style="--i:3"><span class="menu-num">04</span>About</a></nav>
+  <div class="menu-foot"><a href="https://islandhaze.mu/" target="_blank" rel="noopener noreferrer">Shop islandhaze.mu <span aria-hidden="true">↗</span></a><a href="https://www.instagram.com/island.haze/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a></div>
+</dialog>
 <dialog id="bag-dialog" aria-labelledby="bag-title">
   <div class="bag-heading"><h2 id="bag-title">Your styling bag</h2><button id="close-bag" type="button" aria-label="Close styling bag">×</button></div>
   <p class="bag-note">A local outfit shortlist. No payment or order is collected here. Open a piece on islandhaze.mu to buy it.</p>
   <div id="bag-items"></div>
   <p id="bag-total"></p>
-  <button id="export-bag" type="button">Download outfit shortlist</button>
+  <div class="bag-actions"><a class="btn btn--ghost" href="bag.html">View bag</a><button id="export-bag" type="button">Download shortlist</button></div>
 </dialog>
 <div id="bag-status" role="status" aria-live="polite"></div>
 </body>
