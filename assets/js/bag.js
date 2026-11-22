@@ -76,7 +76,7 @@
   }
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   function thumb(p, w, h) {
-    if (p.image) return `<img src="${esc(p.image)}" alt="" width="${w}" height="${h}" loading="lazy" decoding="async">`;
+    if (p.image) return `<img src="${esc(p.thumb || p.image)}" alt="" width="${w}" height="${h}" loading="lazy" decoding="async">`;
     return `<span class="ih-ph" style="--ph:${p.tone}" aria-hidden="true"><span>${esc(p.type)}</span></span>`;
   }
 

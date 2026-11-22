@@ -103,7 +103,7 @@
   /* ---------- Bag page ---------- */
   const listEl = document.querySelector('[data-bag-list]');
   if (listEl) {
-    const thumb = p => p.image ? `<img src="${esc(p.image)}" alt="" width="120" height="150" loading="lazy" decoding="async">` : `<span class="ih-ph" style="--ph:${p.tone}" aria-hidden="true"><span>${esc(p.type)}</span></span>`;
+    const thumb = p => p.image ? `<img src="${esc(p.thumb || p.image)}" alt="" width="120" height="150" loading="lazy" decoding="async">` : `<span class="ih-ph" style="--ph:${p.tone}" aria-hidden="true"><span>${esc(p.type)}</span></span>`;
     const render = () => {
       const rows = window.IHBag.list();
       document.querySelector('[data-bag-count]').textContent = window.IHBag.count();

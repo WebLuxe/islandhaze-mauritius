@@ -380,3 +380,9 @@ runway-section {
   .is-added .rw__add .rw__i-check path { stroke-dashoffset: 0 }
   .rw--js .rw__title, .rw--js .rw__sub, .rw--js .rw__panel-head { transition: none !important }
 }
+
+/* Reserve the frame before the element upgrades so later sections never jump (CLS). Mirrors measure(). */
+runway-section:not(.rw--js) { min-height: max(380px, calc(100svh - 88px)) }
+@media (max-width: 749px) { runway-section:not(.rw--js) { min-height: 109svh } }
+
+@media (pointer: coarse) { .rw__name { display: inline-block; padding: 9px 0; margin: -9px 0; background-position: 0 calc(100% - 9px) } }

@@ -2,8 +2,8 @@
  * Product names, prices and links come from islandhaze.mu (as indexed Nov 2026).
  * `verified: true`  = price read from the product/category listing.
  * `verified: false` = price estimated from the category range — confirm before launch.
- * `image: null`     = no product photo yet. Drop the real photo URL/path in and it replaces
- *                     the colour placeholder tile everywhere (panel, size sheet, bag).
+ * `photo`           = stand-in Unsplash photo (credited) until Island Haze product shots exist.
+ *                     Set `image` to a real photo URL to override it everywhere.
  * Model figures reuse the reference runway cut-outs until Island Haze look shots are shot.
  */
 (function () {
@@ -11,24 +11,29 @@
   const SHOP = 'https://islandhaze.mu/';
   const APPAREL = ['S', 'M', 'L', 'XL'];
   const WAIST = ['30', '32', '34', '36'];
+  // Unsplash stand-in photos, cropped 4:5 on Unsplash's CDN at the size each slot needs.
+  const UQ = '?ixlib=rb-4.1.0&auto=format&fit=crop&crop=entropy&q=70';
+  const U = (ph, name, user) => ({ base: 'https://images.unsplash.com/photo-' + ph + UQ, name, user });
+  const sized = (ph, w) => ph.base + '&w=' + w + '&h=' + Math.round(w * 1.25);
+  const UTM = '?utm_source=island_haze_site&utm_medium=referral';
 
   const items = [
     { id: 'tropez-coloured', name: 'Tropez Coloured', type: 'T-shirt', price: 800, verified: true,
-      url: SHOP + 'tropez-colourede1028529.html', legend: 'Size', sizes: APPAREL, tone: '#f4b23e', image: null },
+      url: SHOP + 'tropez-colourede1028529.html', legend: 'Size', sizes: APPAREL, tone: '#f4b23e', photo: U('1416339698674-4f118dd3388b', 'Jeff Sheldon', 'ugmonk') },
     { id: 'abelneer-denim', name: 'Abelneer Denim', type: 'Denim', price: 1600, verified: true,
-      url: SHOP + 'men.html', legend: 'Waist', sizes: WAIST, tone: '#6f8fb8', image: null },
+      url: SHOP + 'men.html', legend: 'Waist', sizes: WAIST, tone: '#6f8fb8', photo: U('1696967648017-8a8d41bef9e8', 'Roozbeh Eslami', 'roozbeheslami') },
     { id: 'jaffa-cargo', name: 'Jaffa Cargo', type: 'Cargo pant', price: 1600, verified: true,
-      url: SHOP + 'jaffa-cargoe1025027.html', legend: 'Waist', sizes: WAIST, tone: '#8a7a56', image: null },
+      url: SHOP + 'jaffa-cargoe1025027.html', legend: 'Waist', sizes: WAIST, tone: '#8a7a56', photo: U('1766575696324-5b65330f23c2', 'sammy swae', 'sammyswae') },
     { id: 'denim-hoodie-jacket', name: 'Denim Hoodie Jacket', type: 'Outerwear', price: 1600, verified: false,
-      url: SHOP + 'denim-hoodie-jacket', legend: 'Size', sizes: APPAREL, tone: '#3f5e86', image: null, isNew: true },
+      url: SHOP + 'denim-hoodie-jacket', legend: 'Size', sizes: APPAREL, tone: '#3f5e86', photo: U('1570730915174-a8acdab39f71', 'Wassim Chouak', 'ynwasso'), isNew: true },
     { id: 'azuri-stripe', name: 'Azuri Stripe', type: 'Shirt', price: 1200, verified: false,
-      url: SHOP + 'azuri-stripee1025844.html', legend: 'Size', sizes: APPAREL, tone: '#4fb3c9', image: null, isNew: true },
+      url: SHOP + 'azuri-stripee1025844.html', legend: 'Size', sizes: APPAREL, tone: '#4fb3c9', photo: U('1763403006901-9a3371dcff58', 'Asif Azr', 'asifazr'), isNew: true },
     { id: 'bahamas-gauze', name: 'Bahamas Gauze', type: 'Gauze shirt', price: 1100, verified: false,
-      url: SHOP + 'bahamas-gauzee1026310.html', legend: 'Size', sizes: APPAREL, tone: '#e9dcc3', image: null },
+      url: SHOP + 'bahamas-gauzee1026310.html', legend: 'Size', sizes: APPAREL, tone: '#e9dcc3', photo: U('1623413487006-54669f337144', 'Samuel Bryngelsson', 'samuelbryngelsson') },
     { id: 'boxette-moment', name: 'Boxette Moment', type: 'Oversize T-shirt', price: 1000, verified: false, soldOut: true,
-      url: SHOP + 'boxette-momente1026278.html', legend: 'Size', sizes: APPAREL, tone: '#232323', image: null },
+      url: SHOP + 'boxette-momente1026278.html', legend: 'Size', sizes: APPAREL, tone: '#232323', photo: U('1618453292459-53424b66bb6a', 'Sven Ciupka', 'svenciupkab') },
     { id: 'cocoon-freedom', name: 'Cocoon Freedom', type: 'Oversize hoodie', price: 1600, verified: false, soldOut: true,
-      url: SHOP + 'cocoon-freedome1018746.html', legend: 'Size', sizes: APPAREL, tone: '#f2d43a', image: null }
+      url: SHOP + 'cocoon-freedome1018746.html', legend: 'Size', sizes: APPAREL, tone: '#f2d43a', photo: U('1554967769-1f961137e9c1', 'Oswaldo Ibáñez', 'itsmeoswaldo') }
   ];
 
   // Shop categories.
@@ -40,6 +45,12 @@
   items.forEach((p, pi) => {
     p.cat = CAT[p.id];
     p.page = 'product-' + p.id + '.html';
+    if (p.photo && !p.image) {
+      p.image = sized(p.photo, 640);
+      p.thumb = sized(p.photo, 240);
+      p.srcset = [400, 640, 960, 1280].map(w => sized(p.photo, w) + ' ' + w + 'w').join(', ');
+      p.credit = { name: p.photo.name, url: 'https://unsplash.com/@' + p.photo.user + UTM, unsplash: 'https://unsplash.com/' + UTM };
+    }
     p.variants = p.sizes.map((s, si) => ({ id: 910000 + (pi + 1) * 100 + si + 1, a: !p.soldOut, o: [s] }));
   });
 
@@ -74,7 +85,11 @@
     { name: 'La Croisette', area: 'Chemin Vingt Pieds, Grand Baie', phone: '+230 209 2000 (mall)', hours: 'Mon–Sat 09:30–20:30 · Sun 09:30–16:00' }
   ];
 
-  window.IH_DATA = {
+  const scenes = {
+    island: { src: 'https://images.unsplash.com/photo-1513415277900-a62401e19be4' + UQ + '&w=1600&h=700', name: 'Xavier Coiffic', url: 'https://unsplash.com/@xaviercoiffic' + UTM },
+    palms: { src: 'https://images.unsplash.com/photo-1537640685236-a9df2496e232' + UQ + '&w=1600&h=600', name: 'Xavier Coiffic', url: 'https://unsplash.com/@xaviercoiffic' + UTM }
+  };
+  window.IH_DATA = { scenes, 
     source: SHOP,
     shopHost: 'islandhaze.mu',
     looks, items, stores, cats: CATS,

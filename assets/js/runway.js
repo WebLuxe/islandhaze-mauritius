@@ -26,7 +26,7 @@
 
   /* ---------- Markup ---------- */
   function thumb(p, w) {
-    if (p.image) return `<img src="${esc(p.image)}" loading="lazy" decoding="async" alt="" width="${w}" height="${Math.round(w * 1.25)}">`;
+    if (p.image) return `<img src="${esc(p.thumb || p.image)}" loading="lazy" decoding="async" alt="" width="${w}" height="${Math.round(w * 1.25)}">`;
     return `<span class="ih-ph" style="--ph:${p.tone}"><span>${esc(p.type)}</span></span>`;
   }
   function modelImg(lk) {
@@ -247,8 +247,10 @@
       st.transform = `translate3d(${x.toFixed(2)}px,${(-bottom).toFixed(2)}px,0) translateX(-50%) scale(${scale.toFixed(4)})`;
       const o = +op.toFixed(3);
       if (o !== s.op) { st.opacity = o; st.visibility = o < .01 ? 'hidden' : ''; st.pointerEvents = o < .5 ? 'none' : ''; s.op = o; }
-      st.zIndex = z;
-      const b = this.blurOn ? Math.round(blur * 10) / 10 : 0;
+      if (z !== s.z) { st.zIndex = z; s.z = z; }
+      // Coarser blur steps on phones: each new blur radius re-rasterises a large image on the GPU.
+      const q = this.mobile ? 2 : 10;
+      const b = this.blurOn ? Math.round(blur * q) / q : 0;
       if (b !== s.blur) { st.filter = b > .05 ? `blur(${b}px)` : ''; s.blur = b; }
     }
     renderAll() { if (!this.W) return; this.mode === 'ring' ? this.renderRing() : this.renderClassic(); }

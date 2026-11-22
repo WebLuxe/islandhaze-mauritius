@@ -24,7 +24,18 @@ node tools/build.mjs
 - **Instant navigation**: Speculation Rules prefetch links and prerender them on hover.
 - **Other**: deferred scripts, a preconnected and preloaded font, lazy images, `content-visibility` on sections below the fold, and a runway animation loop that only runs while the runway is on screen.
 
+## Photos
+Product photos and the two island scenes are **stand-ins from Unsplash** (credited on each product page and on About). They are not Island Haze garments. They are served from Unsplash's CDN, cropped to 4:5 at the size each slot needs (240px thumbnails, a 400–1280px `srcset` for cards and product pages).
+
+To swap in real shots, set `image:` on a product in `assets/js/data.js`. It overrides the stand-in everywhere. Then remove that product's `photo:` line so the credit disappears too.
+
+## Tested on
+- Desktop: Edge (Chromium), 1440×900.
+- Phone: a real Android 14 device in Chrome 124, 384×748 CSS px, over wireless ADB.
+  - Layout shift 0. Largest image on screen in about 0.4–0.85s locally. Scrolling at 60fps. Runway at 55–60fps. Every tap target 32px or larger.
+  - Chrome versions below 126 have no cross-page View Transitions, so they get a fade-up of the page instead.
+
 ## To do before launch
-- Set `image:` on each product in `data.js` to real Island Haze product photos. Until then a colour tile is shown.
+- Real Island Haze product photos (see Photos).
 - Confirm the prices marked `verified: false` in `data.js`.
 - Replace the model cut-outs (`m640` / `m1080`) with Island Haze look shots, and adjust the `PIN` positions to match.
